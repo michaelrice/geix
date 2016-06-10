@@ -1,14 +1,13 @@
-GEIX Horizon Theme
-==================
+# GEIX Horizon Theme
+
 
 Custom made horizon theme to allow info box with help for a page.
 
 
-Install
-=======
-Download the contents of this repo to anywhere on the file system as long as the 
-user running Horizon has read access. Next edit your Horizon ``local_settings.py`` file 
-to point at this theme. If you downloaded the theme and put it in ``/opt/horizon/themes/geix`` 
+# Install
+
+Download the contents of this repo to anywhere on the file system as long as the user running Horizon has read access.
+Next edit your Horizon `local_settings.py` file to point at this theme. If you downloaded the theme and put it in `/opt/horizon/themes/geix` 
 and your horizon is downloaded (for example using DevStack) in ``/opt/stack/horizon`` then you edit 
 ``/opt/stack/horizon/openstack_dashboard/local/local_settings.py`` and add ``CUSTOM_THEME_PATH='/opt/horizon/themes/geix'`` 
 and be sure no other ``CUSTOM_THEME_PATH`` variables have been defined. Next save that file and exit. Go to 
