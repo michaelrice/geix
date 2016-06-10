@@ -31,6 +31,8 @@ $(document).ready(function () {
     success: function (data) {
       $('#help-info-content').empty();
       $('#help-info-content').html(data);
+      $('div#content_body div.table_wrapper').addClass('col-xs-9');
+      $('div.help_info_container').addClass('col-xs-3');
     },
     error: function () {
       $('#help-info-content').remove();

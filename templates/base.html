@@ -38,10 +38,11 @@
                 {% block page_header %}
                   {% include "horizon/common/_page_header.html" with title=page_title %}
                 {% endblock %}
-                {% block main %}{% endblock %}
-                {% block help-info-block %}
+                    {% block main %}{% endblock %}
+
+                    {% block help-info-block %}
                     {% include "horizon/_help_info_block.html" %}
-                {% endblock %}
+                    {% endblock %}
               </div>
             </div>
           </div>
