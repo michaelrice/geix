@@ -73,9 +73,21 @@
 }
 
 #help-info-content {
-
+  padding: 1px 15px 15px;
 }
 
 div#help-info-content h1 {
   font-size: 1.875em;
+}
+
+body {
+  background-color: rgba(105, 105, 105, 0.14);
+}
+
+div#sidebar {
+  background-color: white
+}
+
+div#data-backgroup {
+  background-color: white
 }
