@@ -44,6 +44,9 @@
               </div>
             </div>
           </div>
+  {% block help-info-block %}
+      {% include "horizon/_help_info_block.html" %}
+  {% endblock %}
         </div>
       </div>
     {% endblock %}
@@ -54,8 +57,5 @@
       {% include "horizon/_scripts.html" %}
     {% endblock %}
     <div id="modal_wrapper"></div>
-  {% block help-info-block %}
-      {% include "horizon/_help_info_block.html" %}
-  {% endblock %}
   </body>
 </html>

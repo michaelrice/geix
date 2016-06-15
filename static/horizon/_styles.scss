@@ -70,6 +70,12 @@
 
 .help-info-container {
   border: 1px solid black;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 300px;
+  display: None;
+  background-color: white;
 }
 
 #help-info-content {
@@ -92,4 +98,9 @@ div.login {
   background-color: white !important;
 }
 
+#help-info-control-bar {
+  cursor: pointer;
+  height: 50px;
+
+}
 div#main_content

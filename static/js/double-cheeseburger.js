@@ -75,12 +75,36 @@ $(document).ready(function () {
   function fetchHelpPageSuccess(data) {
     $('#help-info-content').empty();
     $('#help-info-content').html(data);
-    //$('div#content_body div.table_wrapper').addClass('col-xs-9 panel');
     $('div.help-info-container').addClass('ui-dragabble');
+    setInfobarHeight();
+    $('#main_content').append()
+    $('div.help-info-container').show();
 
   }
 
   function fetchHelpError() {
     $('#help-info-content').parent().empty().remove();
   }
+
+  function setInfobarHeight() {
+    var control_bar_height = $("#help-info-control-bar").height();
+    var main_content_height = $("#main_content").height();
+    var side_bar_height = $("#sidebar").height();
+    var max_height = main_content_height;
+    if(side_bar_height > main_content_height) {
+      max_height = side_bar_height;
+    }
+    var help_content_height = max_height - control_bar_height;
+    $('#help-info-content').height(help_content_height);
+    console.log("control ".concat(control_bar_height));
+    console.log("main ".concat(main_content_height));
+    console.log("help ".concat(help_content_height));
+    console.log("max " + max_height);
+  }
+
+  $('div#help-info-control-bar').click(function(e) {
+    setInfobarHeight();
+    $(this).parent().find('#help-info-content').toggle();
+    console.log("clicked the toggle");
+  })
 });
