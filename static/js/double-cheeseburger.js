@@ -15,38 +15,72 @@
  */
 
 
+
 $(document).ready(function () {
   'use strict';
+  var info_site = "http://127.0.0.1:8080";
+  fetchjsonMap(info_site);
 
   function fetchjsonMap(site) {
     $.ajax({
-      url: site,
+      url: site.concat("/index.json"),
       type: "GET",
-      dataType: "json"
+      dataType: "json",
+      success: function(data) {
+        findMatchingHelpDoc(data, site)
+      },
+      error: function() {
+        fetchHelpError()
+      }
     });
   }
-  var $doc_page_to_get = $(location).attr("pathname");
-  var $info_site = "http://127.0.0.1:8080";
 
-  var $re = new RegExp()
-  if($doc_page_to_get.endsWith("/")) {
-    $doc_page_to_get = $doc_page_to_get.slice(0, -1);
-    $doc_page_to_get = $info_site.concat($doc_page_to_get.concat(".html"));
-  }
-  $.ajax({
-    url: $doc_page_to_get,
-    type: "GET",
-    dataType: "html",
-    success: function (data) {
-      $('#help-info-content').empty();
-      $('#help-info-content').html(data);
-      $('div#content_body div.table_wrapper').addClass('col-xs-9 panel');
-      $('div.help-info-container').addClass('col-xs-3');
-      $('div#help-info-content').addClass('panel');
-      
-    },
-    error: function () {
-      $('#help-info-content').remove();
+  function findMatchingHelpDoc(data, site) {
+    // Setup a regex using the data
+    var doc_page_to_match = $(location).attr("pathname");
+    // loop though the keys in the data file looking for a key that
+    // matches the pathname
+    var catalog = data["Catalog"];
+    var arrayLen = catalog.length;
+    var doc_to_serve;
+    for(var i=0; i<arrayLen; i++) {
+      var re = new RegExp(catalog[i]["regex"]);
+      var matches = re.exec(doc_page_to_match);
+      if(matches) {
+        doc_to_serve = catalog[i]["doc"];
+        break;
+      }
+      if(i === arrayLen-1) {
+        fetchHelpError();
+        return;
+      }
     }
-  });
+    fetchHelpPage(site.concat(doc_to_serve));
+  }
+
+  function fetchHelpPage(page) {
+    $.ajax({
+      url: page,
+      type: "GET",
+      dataType: "html",
+      success: function(data) {
+        fetchHelpPageSuccess(data)
+      },
+      error: function() {
+        fetchHelpError()
+      }
+    });
+  }
+
+  function fetchHelpPageSuccess(data) {
+    $('#help-info-content').empty();
+    $('#help-info-content').html(data);
+    //$('div#content_body div.table_wrapper').addClass('col-xs-9 panel');
+    $('div.help-info-container').addClass('ui-dragabble');
+
+  }
+
+  function fetchHelpError() {
+    $('#help-info-content').parent().empty().remove();
+  }
 });
