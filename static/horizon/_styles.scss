@@ -68,24 +68,6 @@
   }
 }
 
-.help-info-container {
-  border: 1px solid black;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 300px;
-  display: None;
-  background-color: white;
-}
-
-#help-info-content {
-  padding: 1px 15px 15px;
-}
-
-div#help-info-content h1 {
-  font-size: 1.875em;
-}
-
 body {
   background-color: rgba(105, 105, 105, 0.14);
 }
@@ -97,10 +79,3 @@ div#sidebar {
 div.login {
   background-color: white !important;
 }
-
-#help-info-control-bar {
-  cursor: pointer;
-  height: 50px;
-
-}
-div#main_content

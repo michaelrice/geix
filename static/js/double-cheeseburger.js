@@ -18,10 +18,92 @@
 
 $(document).ready(function () {
   'use strict';
-  var info_site = "http://127.0.0.1:8080";
+  //var info_site = "http://127.0.0.1:8080";
+  var info_site = "http://162.242.211.248:8000";
   fetchjsonMap(info_site);
 
+  function setInfobarHeight() {
+    /*var control_bar_height = $(".help-info-control-bar").height();
+    var main_content_height = $("#main_content").height();
+    var side_bar_height = $("#sidebar").height();
+    var max = Math.max(main_content_height, side_bar_height);
+    var help_content_height = Math.max(main_content_height, side_bar_height) - control_bar_height;
+    $('.help-info-content').height(help_content_height);
+    console.log("control " + control_bar_height);
+    console.log("max " + max);
+    console.log("help " + help_content_height);*/
+  }
+
+  function helpInfoContainer() {
+    var opened = false;
+    var $help = $('<div></div>')
+      .addClass('help-info-container')
+      .css('border', "1px solid rgba(0, 0, 0, 0.14)")
+      .css('position', 'absolute')
+      .css('bottom', '10px')
+      .css('right', '10px')
+      .css('background-color', '#fff')
+      .css('width', '300px')
+      .css("display", "block");
+
+    var $control = $('<div>Help</div>')
+      .addClass('help-info-control-bar')
+      .css('background-color', 'rgb(59, 115, 185)')
+      .css('font-weight', 'bold')
+      .css('padding', '5px 5px 5px 15px')
+      .css('color', '#ffffff')
+      .css('cursor', 'pointer');
+
+    var $icon = $('<span></span>')
+      .addClass('glyphicon')
+      .addClass('glyphicon-plus')
+      .css('font-size', '20px')
+      .css('float', 'right');
+    $icon.appendTo($control);
+
+    var $content = $('<div></div>')
+      .addClass('help-info-content')
+      .css('display', 'none')
+      .css('overflow-y', 'auto')
+      .css("margin", "10px 10px 10px 10px");
+
+    $control.appendTo($help);
+    $content.appendTo($help);
+
+    function open() {
+      var topBarHeight = $('.topbar').height(); 
+      $help.css('top', "" + (topBarHeight + 10) + "px");
+      $icon
+        .addClass('glyphicon-minus')
+        .removeClass('glyphicon-plus');
+      var containerHeight = $help.height();
+      var controlHeight = $control.height();
+      $content
+        .height(containerHeight - controlHeight - (3 * 10))
+        .show();
+      opened = true;
+    }
+
+    function close() {
+      $help.css('top', '');
+      $content.hide(); 
+      $icon
+        .addClass('glyphicon-plus')
+        .removeClass('glyphicon-minus');
+      opened = false;
+    }
+
+    $control.click(function(e) {
+      if (opened)
+        close();
+      else
+        open();
+    })
+    return $help;
+  }
+
   function fetchjsonMap(site) {
+    console.log("Fetching the jsons");
     $.ajax({
       url: site.concat("/index.json"),
       type: "GET",
@@ -59,6 +141,7 @@ $(document).ready(function () {
   }
 
   function fetchHelpPage(page) {
+    console.log("fetching the help page;");
     $.ajax({
       url: page,
       type: "GET",
@@ -73,38 +156,14 @@ $(document).ready(function () {
   }
 
   function fetchHelpPageSuccess(data) {
-    $('#help-info-content').empty();
-    $('#help-info-content').html(data);
-    $('div.help-info-container').addClass('ui-dragabble');
-    setInfobarHeight();
-    $('#main_content').append()
-    $('div.help-info-container').show();
-
+    console.log("Hit the damn success");
+    var $help = helpInfoContainer();
+    $help.find('.help-info-content').html(data);
+    $('#main_content').append($help)
+    console.log("appended");
   }
 
   function fetchHelpError() {
     $('#help-info-content').parent().empty().remove();
   }
-
-  function setInfobarHeight() {
-    var control_bar_height = $("#help-info-control-bar").height();
-    var main_content_height = $("#main_content").height();
-    var side_bar_height = $("#sidebar").height();
-    var max_height = main_content_height;
-    if(side_bar_height > main_content_height) {
-      max_height = side_bar_height;
-    }
-    var help_content_height = max_height - control_bar_height;
-    $('#help-info-content').height(help_content_height);
-    console.log("control ".concat(control_bar_height));
-    console.log("main ".concat(main_content_height));
-    console.log("help ".concat(help_content_height));
-    console.log("max " + max_height);
-  }
-
-  $('div#help-info-control-bar').click(function(e) {
-    setInfobarHeight();
-    $(this).parent().find('#help-info-content').toggle();
-    console.log("clicked the toggle");
-  })
 });
